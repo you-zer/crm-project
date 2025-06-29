@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Artisan::command('crm:job-status', function (Command $command) {
+    // теперь $command однозначно Command
+    $command->comment('Проверяем статус задач CRM...');
+})->describe('Показывает статус background–задач CRM');

@@ -1,0 +1,10 @@
+includes:
+	- phar://phpstan.phar/conf/bleedingEdge.neon
+parameters:
+  # уровень от 0 до max
+  level: max
+  # что проверять
+  paths:
+    - app
+    - database
+    - routes
