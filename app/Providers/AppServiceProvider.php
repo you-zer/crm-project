@@ -3,6 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\Contracts\ClientServiceInterface;
+use App\Services\Implementations\ClientService;
+use App\Services\Contracts\ProfileServiceInterface;
+use App\Services\Implementations\ProfileService;
+use App\Services\Contracts\UserServiceInterface;
+use App\Services\Implementations\UserService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,12 +18,16 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            \App\Services\Contracts\ClientServiceInterface::class,
-            \App\Services\Implementations\ClientService::class
+            ClientServiceInterface::class,
+            ClientService::class
         );
         $this->app->bind(
-            \App\Services\Contracts\ProfileServiceInterface::class,
-            \App\Services\Implementations\ProfileService::class
+            ProfileServiceInterface::class,
+            ProfileService::class
+        );
+        $this->app->bind(
+            UserServiceInterface::class,
+            UserService::class
         );
     }
 
