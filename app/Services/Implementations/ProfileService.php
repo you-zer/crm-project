@@ -15,6 +15,9 @@ final class ProfileService implements ProfileServiceInterface
     public function update(array $data): User
     {
         $user = Auth::user();
+        if ($user->email !== $data['email']) {
+            $user->email_verified_at = null;
+        }
         $user->fill($data);
         $user->save();
         return $user->refresh();
