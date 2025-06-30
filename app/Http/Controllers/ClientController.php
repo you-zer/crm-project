@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -8,6 +9,8 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Services\Contracts\ClientServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
+
 
 final class ClientController extends Controller
 {
@@ -15,10 +18,10 @@ final class ClientController extends Controller
         private readonly ClientServiceInterface $service
     ) {}
 
-    public function index(): JsonResponse
+    public function index(): View
     {
-        $paginator = $this->service->paginate();
-        return response()->json($paginator);
+        $clients = $this->service->paginate();
+        return view('clients.index', compact('clients'));
     }
 
     public function store(StoreClientRequest $request): JsonResponse
@@ -31,9 +34,9 @@ final class ClientController extends Controller
         return response()->json($client, 201);
     }
 
-    public function show(Client $client): JsonResponse
+    public function show(Client $client): View
     {
-        return response()->json($client);
+        return view('clients.show', compact('client'));
     }
 
     public function update(UpdateClientRequest $request, Client $client): JsonResponse
@@ -46,5 +49,15 @@ final class ClientController extends Controller
     {
         $this->service->delete($client);
         return response()->json(null, 204);
+    }
+
+    public function create(): View
+    {
+        return view('clients.create');
+    }
+
+    public function edit(Client $client): View
+    {
+        return view('clients.edit', compact('client'));
     }
 }
