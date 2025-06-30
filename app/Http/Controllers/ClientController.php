@@ -10,13 +10,18 @@ use App\Models\Client;
 use App\Services\Contracts\ClientServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 
 final class ClientController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private readonly ClientServiceInterface $service
-    ) {}
+    ) {
+        $this->authorizeResource(Client::class, 'client');
+    }
 
     public function index(): View
     {

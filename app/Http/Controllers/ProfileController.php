@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\UpdateAvatarRequest;
 use App\Services\Contracts\ProfileServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +17,10 @@ final class ProfileController extends Controller
 {
     public function __construct(
         private readonly ProfileServiceInterface $service
-    ) {}
+    ) {
+        // Разрешаем только авторизованному пользователю изменять свой профиль
+        $this->middleware('auth:sanctum');
+    }
 
     /**
      * Display the user's profile form.
