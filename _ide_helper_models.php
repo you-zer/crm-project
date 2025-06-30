@@ -16,6 +16,74 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $last_name Фамилия
+ * @property string $first_name Имя
+ * @property string|null $middle_name Отчество
+ * @property string|null $company Компания
+ * @property string $email E-mail клиента
+ * @property string|null $phone Телефон
+ * @property string|null $address Адрес
+ * @property string|null $latitude Широта
+ * @property string|null $longitude Долгота
+ * @property int $status_id Статус клиента
+ * @property int|null $assigned_user_id Ответственный менеджер
+ * @property int $created_by_user_id Кто создал запись
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $assignedUser
+ * @property-read \App\Models\User $creator
+ * @property-read \App\Models\Status $status
+ * @method static \Database\Factories\ClientFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereAssignedUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereCompany($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereCreatedByUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereLongitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereMiddleName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereStatusId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereUpdatedAt($value)
+ */
+	class Client extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name Название статуса, например: новый, в работе, закрыт
+ * @property string|null $description Подробное описание статуса
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Client> $clients
+ * @property-read int|null $clients_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Status whereUpdatedAt($value)
+ */
+	class Status extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
