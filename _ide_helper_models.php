@@ -32,6 +32,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $assignedUser
  * @property-read \App\Models\User $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Interaction> $interactions
+ * @property-read int|null $interactions_count
  * @property-read \App\Models\Status $status
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
@@ -63,6 +65,39 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $client_id
+ * @property int $user_id
+ * @property string $type
+ * @property string|null $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Client $client
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\InteractionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Interaction withoutTrashed()
+ */
+	class Interaction extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $name Название статуса, например: новый, в работе, закрыт
  * @property string|null $description Подробное описание статуса
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -85,11 +120,19 @@ namespace App\Models{
 /**
  * Метки клиентов
  *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Client> $clients
  * @property-read int|null $clients_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereUpdatedAt($value)
  */
 	class Tag extends \Eloquent {}
 }
@@ -106,6 +149,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Interaction> $interactions
+ * @property-read int|null $interactions_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions

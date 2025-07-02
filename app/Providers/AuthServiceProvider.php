@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Client::class => ClientPolicy::class,
+        Interaction::class => InteractionPolicy::class,
     ];
 
     public function boot(): void
