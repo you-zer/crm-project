@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Client;
+use App\Models\Comment;
+use APP\Models\Interaction;
 use App\Policies\ClientPolicy;
+use App\Policies\CommentPolicy;
+use App\Policies\InteractionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -18,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Client::class => ClientPolicy::class,
         Interaction::class => InteractionPolicy::class,
+        Comment::class => CommentPolicy::class,
     ];
 
     public function boot(): void
