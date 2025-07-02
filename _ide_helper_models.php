@@ -33,6 +33,8 @@ namespace App\Models{
  * @property-read \App\Models\User|null $assignedUser
  * @property-read \App\Models\User $creator
  * @property-read \App\Models\Status $status
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
+ * @property-read int|null $tags_count
  * @method static \Database\Factories\ClientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Client newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Client newQuery()
@@ -77,6 +79,19 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Status whereUpdatedAt($value)
  */
 	class Status extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * Метки клиентов
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Client> $clients
+ * @property-read int|null $clients_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag query()
+ */
+	class Tag extends \Eloquent {}
 }
 
 namespace App\Models{

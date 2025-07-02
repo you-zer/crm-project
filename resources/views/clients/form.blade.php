@@ -69,6 +69,15 @@
     @error('status_id')<p class="text-red-600">{{ $message }}</p>@enderror
 </div>
 
+@foreach($tags as $tag)
+    <label class="inline-flex items-center mr-4">
+        <input type="checkbox" name="tag_ids[]"
+               value="{{ $tag->id }}"
+               @checked(in_array($tag->id, old('tag_ids', $tagIds)))>
+        <span class="ml-2">{{ $tag->name }}</span>
+    </label>
+@endforeach
+
 {{-- Address --}}
 <div class="mb-4">
     <label for="address" class="block font-medium">Address</label>
