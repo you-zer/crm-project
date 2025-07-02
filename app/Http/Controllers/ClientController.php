@@ -11,6 +11,7 @@ use App\Services\Contracts\ClientServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\Tag;
 
 
 final class ClientController extends Controller
@@ -58,11 +59,21 @@ final class ClientController extends Controller
 
     public function create(): View
     {
-        return view('clients.create');
+        // Список всех тегов
+        $tags = Tag::all();
+        // Для create — нет отмеченных тегов
+        $tagIds = [];
+
+        return view('clients.create', compact('tags', 'tagIds'));
     }
 
     public function edit(Client $client): View
     {
-        return view('clients.edit', compact('client'));
+        // Список всех тегов
+        $tags = Tag::all();
+        // Массив ID меток, уже связанных с клиентом
+        $tagIds = $client->tags->pluck('id')->all();
+
+        return view('clients.edit', compact('client', 'tags', 'tagIds'));
     }
 }

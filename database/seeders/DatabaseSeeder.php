@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
             StatusSeeder::class,
+            TagSeeder::class,
             ClientSeeder::class,
         ]);
         $admin = User::factory()->create([

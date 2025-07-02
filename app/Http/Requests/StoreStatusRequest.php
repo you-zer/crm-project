@@ -16,6 +16,8 @@ class StoreStatusRequest extends FormRequest
         return [
             'name'        => 'required|string|max:50|unique:statuses,name',
             'description' => 'nullable|string',
+            'tag_ids'   => ['sometimes', 'array'],
+            'tag_ids.*' => ['integer', 'exists:tags,id'],
         ];
     }
 }

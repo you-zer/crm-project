@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Client;
 use App\Models\Status;
 use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClientFactory extends Factory
@@ -42,5 +43,17 @@ class ClientFactory extends Factory
             'created_by_user_id' => $createdById,
             'assigned_user_id'   => $assignedId,
         ];
+    }
+
+    public function configure(): self
+    {
+        return $this->afterCreating(function (Client $client) {
+            // Привязываем случайные 1–3 тега
+            $tagIds = Tag::inRandomOrder()
+                ->take(rand(1, 3))
+                ->pluck('id')
+                ->all();
+            $client->tags()->sync($tagIds);
+        });
     }
 }

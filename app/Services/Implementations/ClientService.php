@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Implementations;
@@ -17,8 +18,12 @@ final class ClientService implements ClientServiceInterface
 
     public function create(array $data): Client
     {
-        return DB::transaction(function() use ($data): Client {
-            return Client::create($data);
+        return DB::transaction(function () use ($data): Client {
+            $client = Client::create($data);
+            if (!empty($data['tag_ids'])) {
+                $client->tags()->sync($data['tag_ids']);
+            }
+            return $client->refresh();
         });
     }
 
@@ -29,15 +34,16 @@ final class ClientService implements ClientServiceInterface
 
     public function update(Client $client, array $data): Client
     {
-        return DB::transaction(function() use ($client, $data): Client {
+        return DB::transaction(function () use ($client, $data): Client {
             $client->update($data);
+            $client->tags()->sync($data['tag_ids'] ?? []);
             return $client->refresh();
         });
     }
 
     public function delete(Client $client): bool
     {
-        return DB::transaction(function() use ($client): bool {
+        return DB::transaction(function () use ($client): bool {
             return (bool) $client->delete();
         });
     }

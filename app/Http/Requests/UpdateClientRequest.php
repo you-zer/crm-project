@@ -27,6 +27,8 @@ class UpdateClientRequest extends FormRequest
             'latitude'           => 'sometimes|nullable|numeric|between:-90,90',
             'longitude'          => 'sometimes|nullable|numeric|between:-180,180',
             'assigned_user_id'   => 'sometimes|nullable|exists:users,id',
+            'tag_ids'   => ['sometimes', 'array'],
+            'tag_ids.*' => ['integer', 'exists:tags,id'],
         ];
     }
 }

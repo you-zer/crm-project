@@ -1,4 +1,3 @@
-{{-- resources/views/clients/show.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
@@ -12,12 +11,17 @@
         <dt class="font-medium">Phone</dt><dd>{{ $client->phone }}</dd>
         <dt class="font-medium">Status</dt><dd>{{ $client->status->name }}</dd>
         <dt class="font-medium">Address</dt><dd>{{ $client->address }}</dd>
-        <dt class="font-medium">Coordinates</dt>
-            <dd>{{ $client->latitude }}, {{ $client->longitude }}</dd>
-        <dt class="font-medium">Assigned To</dt>
-            <dd>{{ $client->assignedUser?->name ?? '—' }}</dd>
-        <dt class="font-medium">Created By</dt>
-            <dd>{{ $client->creator?->name ?? '—' }}</dd>
+        <dt class="font-medium">Coordinates</dt><dd>{{ $client->latitude }}, {{ $client->longitude }}</dd>
+        <dt class="font-medium">Assigned To</dt><dd>{{ $client->assignedUser?->name ?? '—' }}</dd>
+        <dt class="font-medium">Created By</dt><dd>{{ $client->creator?->name ?? '—' }}</dd>
+        <dt class="font-medium">Tags</dt>
+        <dd>
+            @foreach($client->tags as $tag)
+                <span class="inline-block px-2 py-1 bg-gray-200 text-sm rounded mr-1">
+                    {{ $tag->name }}
+                </span>
+            @endforeach
+        </dd>
     </dl>
 
     <div class="mt-4 space-x-2">
@@ -25,8 +29,7 @@
         <form action="{{ route('clients.destroy', $client) }}" method="POST" class="inline">
             @csrf
             @method('DELETE')
-            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded"
-                    onclick="return confirm('Delete this client?')">Delete</button>
+            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded" onclick="return confirm('Delete this client?')">Delete</button>
         </form>
         <a href="{{ route('clients.index') }}" class="px-4 py-2 bg-gray-300 rounded">Back</a>
     </div>
