@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,6 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
 Route::resource('clients', ClientController::class);
 Route::resource('tags', TagController::class);
+Route::resource('interactions', InteractionController::class);
 
 require __DIR__.'/auth.php';
