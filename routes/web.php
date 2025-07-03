@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DealController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
@@ -35,5 +36,6 @@ Route::resource('tags', TagController::class);
 Route::resource('interactions', InteractionController::class);
 Route::resource('comments', CommentController::class);
 Route::resource('tasks', TaskController::class);
+Route::resource('deals', DealController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
