@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             InteractionSeeder::class,
             CommentSeeder::class,
+            TaskSeeder::class,
         ]);
         $admin = User::factory()->create([
             'email' => 'admin@example.com',

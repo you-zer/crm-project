@@ -66,12 +66,27 @@ namespace App\Models{
 /**
  * 
  *
- * @property-read \App\Models\Client|null $client
- * @property-read \App\Models\User|null $user
+ * @property int $id
+ * @property int $client_id
+ * @property int $user_id
+ * @property string $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Client $client
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment withoutTrashed()
  */
@@ -153,6 +168,52 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereUpdatedAt($value)
  */
 	class Tag extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $client_id
+ * @property string $title
+ * @property string|null $description
+ * @property string $status
+ * @property int $assigned_user_id
+ * @property int $created_by_user_id
+ * @property \Illuminate\Support\Carbon $due_date
+ * @property string $recurrence_type
+ * @property int $recurrence_interval
+ * @property \Illuminate\Support\Carbon|null $recurrence_until
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User $assignedUser
+ * @property-read \App\Models\Client $client
+ * @property-read \App\Models\User $creator
+ * @method static \Database\Factories\TaskFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereAssignedUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereCreatedByUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereDueDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereRecurrenceInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereRecurrenceType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereRecurrenceUntil($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Task withoutTrashed()
+ */
+	class Task extends \Eloquent {}
 }
 
 namespace App\Models{

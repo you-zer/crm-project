@@ -8,11 +8,13 @@ use App\Services\Contracts\CommentServiceInterface;
 use App\Services\Contracts\InteractionServiceInterface;
 use App\Services\Implementations\ClientService;
 use App\Services\Contracts\ProfileServiceInterface;
+use App\Services\Contracts\TaskServiceInterface;
 use App\Services\Implementations\ProfileService;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\Implementations\CommentService;
 use App\Services\Implementations\UserService;
 use App\Services\Implementations\InteractionService;
+use App\Services\Implementations\TaskService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CommentServiceInterface::class,
             CommentService::class
+        );
+        $this->app->bind(
+            TaskServiceInterface::class,
+            TaskService::class,
         );
     }
 
