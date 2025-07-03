@@ -99,6 +99,43 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $client_id
+ * @property string $title
+ * @property string $amount
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $closed_at
+ * @property int $assigned_user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User $assignedUser
+ * @property-read \App\Models\Client $client
+ * @method static \Database\Factories\DealFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereAssignedUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereClosedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Deal withoutTrashed()
+ */
+	class Deal extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $client_id
  * @property int $user_id
  * @property string $type
  * @property string|null $content
