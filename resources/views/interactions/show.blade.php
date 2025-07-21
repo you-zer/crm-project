@@ -1,29 +1,71 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="inline-flex font-semibold text-xl text-gray-800 leading-tight">
+            Карточка взаимодействия
+        </h2>
+        <a href="{{ route('interactions.edit', $interaction) }}"
+            class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent
+                              rounded-md font-semibold text-xs text-gray uppercase tracking-widest
+                              hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            Редактировать
+        </a>
+        <a href="{{ route('interactions.index') }}"
+            class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent
+                              rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+                              hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            Назад
+        </a>
+    </x-slot>
 
-@section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Interaction #{{ $interaction->id }}</h1>
-    <dl class="grid grid-cols-2 gap-4 bg-white border rounded p-4">
-        <dt class="font-medium">Client</dt>
-        <dd>{{ $interaction->client->last_name }} {{ $interaction->client->first_name }}</dd>
-        <dt class="font-medium">User</dt>
-        <dd>{{ $interaction->user->name }}</dd>
-        <dt class="font-medium">Type</dt>
-        <dd>{{ ucfirst($interaction->type) }}</dd>
-        <dt class="font-medium">Content</dt>
-        <dd>{{ $interaction->content }}</dd>
-        <dt class="font-medium">Date</dt>
-        <dd>{{ $interaction->created_at->format('Y-m-d H:i') }}</dd>
-    </dl>
-
-    <div class="mt-4 space-x-2">
-        <a href="{{ route('interactions.edit', $interaction) }}" class="px-4 py-2 bg-green-600 text-white rounded">Edit</a>
-        <form action="{{ route('interactions.destroy', $interaction) }}" method="POST" class="inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded" onclick="return confirm('Delete this interaction?')">Delete</button>
-        </form>
-        <a href="{{ route('interactions.index') }}" class="px-4 py-2 bg-gray-300 rounded">Back</a>
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-sm rounded-lg">
+                <table class="min-w-full border-collapse border border-gray-200">
+                    <tbody>
+                        <tr class="hover:bg-gray-50">
+                            <td role="rowheader"
+                                class="border border-gray-200 px-6 py-4 !text-left text-sm font-semibold text-gray-500">
+                                ФИО</td>
+                            <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                                {{ $interaction->client->last_name }} {{ $interaction->client->last_name }}
+                                {{ $interaction->client->middle_name }}
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td role="rowheader"
+                                class="border border-gray-200 px-6 py-4 !text-left text-sm font-semibold text-gray-500">
+                                Пользователь</td>
+                            <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                                {{ $interaction->user->name }}
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td role="rowheader"
+                                class="border border-gray-200 px-6 py-4 !text-left text-sm font-semibold text-gray-500">
+                                Тип</td>
+                            <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                                {{ ucfirst($interaction->type) }}
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td role="rowheader"
+                                class="border border-gray-200 px-6 py-4 !text-left text-sm font-semibold text-gray-500">
+                                Контент</td>
+                            <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                                {{ $interaction->content }}
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td role="rowheader"
+                                class="border border-gray-200 px-6 py-4 !text-left text-sm font-semibold text-gray-500">
+                                Дата</td>
+                            <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                                {{ $interaction->created_at->format('Y-m-d H:i') }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
-@endsection
+</x-app-layout>

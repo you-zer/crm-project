@@ -34,12 +34,16 @@ final class CommentController extends Controller
 
     public function store(StoreCommentRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        $data['user_id'] = auth()->id;
+        $data = array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        );
 
-        $this->service->create($data);
-        return redirect()->route('comments.index')
-            ->with('status', 'Comment added');
+        $comment = $this->service->create($data);
+
+        return redirect()
+            ->route('comments.show', $comment)
+            ->with('success', 'Клиент успешно создан');
     }
 
     public function show(Comment $comment): View
@@ -56,8 +60,10 @@ final class CommentController extends Controller
     public function update(UpdateCommentRequest $request, Comment $comment): RedirectResponse
     {
         $this->service->update($comment, $request->validated());
-        return redirect()->route('comments.index')
-            ->with('status', 'Comment updated');
+
+        return redirect()
+            ->route('comments.show', $comment)
+            ->with('success', 'Комментарий успешно обновлён');
     }
 
     public function destroy(Comment $comment): RedirectResponse

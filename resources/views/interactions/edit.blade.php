@@ -1,32 +1,37 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Редактировать взаимодействие #{{ $interaction->id }}
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Edit Interaction #{{ $interaction->id }}</h1>
-    <form action="{{ route('interactions.update', $interaction) }}" method="POST">
-        @method('PUT')
-        @csrf
-        <div class="mb-4">
-            <label for="client_id" class="block font-medium">Client</label>
-            <select id="client_id" name="client_id" class="w-full border rounded px-3 py-2" disabled>
-                <option>{{ $interaction->client->last_name }} {{ $interaction->client->first_name }}</option>
-            </select>
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-sm rounded-lg p-6">
+                <form action="{{ route('interactions.update', $interaction) }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                    @include('interactions._form', [
+                        'clients' => [$interaction->client],
+                        'interaction' => $interaction,
+                        'disableClient' => true,
+                    ])
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <a href="{{ route('interactions.index') }}"
+                            class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent
+                                  rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+                                  hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Отмена
+                        </a>
+                        <button type="submit"
+                            class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent
+                                       rounded-md font-semibold text-xs text-gray uppercase tracking-widest
+                                       hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            Сохранить
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-4">
-            <label for="type" class="block font-medium">Type</label>
-            <select id="type" name="type" class="w-full border rounded px-3 py-2">
-                @foreach(['call'=>'Call','email'=>'Email','meeting'=>'Meeting'] as $value=>$label)
-                    <option value="{{ $value }}" @selected(old('type',$interaction->type)==$value)>{{ $label }}</option>
-                @endforeach
-            </select>
-            @error('type')<p class="text-red-600">{{ $message }}</p>@enderror
-        </div>
-        <div class="mb-4">
-            <label for="content" class="block font-medium">Content</label>
-            <textarea id="content" name="content" class="w-full border rounded px-3 py-2" rows="4">{{ old('content',$interaction->content) }}</textarea>
-            @error('content')<p class="text-red-600">{{ $message }}</p>@enderror
-        </div>
-        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Update</button>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>

@@ -1,22 +1,35 @@
-@extends('layouts.app')
-@section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Edit Comment #{{ $comment->id }}</h1>
-    <form action="{{ route('comments.update', $comment) }}" method="POST">
-        @method('PUT')
-        @csrf
-        <div class="mb-4">
-            <label class="block font-medium" for="client_id">Client</label>
-            <select disabled class="w-full border rounded px-3 py-2">
-                <option>{{ $comment->client->last_name }} {{ $comment->client->first_name }}</option>
-            </select>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Редактировать комментарий
+        </h2>
+    </x-slot>
+
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-sm rounded-lg p-6">
+                <form method="POST" action="{{ route('comments.update', $comment) }}">
+                    @csrf
+                    @include('comments._form', [
+                        'clients' => [$comment->client],
+                        'comment' => $comment,
+                    ])
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <a href="{{ route('comments.index') }}"
+                            class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent
+                                  rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+                                  hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Отмена
+                        </a>
+                        <button type="submit"
+                            class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent
+                                       rounded-md font-semibold text-xs text-gray uppercase tracking-widest
+                                       hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            Сохранить
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-4">
-            <label class="block font-medium" for="content">Content</label>
-            <textarea id="content" name="content" rows="5" class="w-full border rounded px-3 py-2">{{ old('content',$comment->content) }}</textarea>
-            @error('content')<p class="text-red-600">{{ $message }}</p>@enderror
-        </div>
-        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Update</button>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>
