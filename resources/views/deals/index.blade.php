@@ -1,44 +1,81 @@
-@extends('layouts.app')
-@section('content')
-<div class="container mx-auto p-4">
-    <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">Deals</h1>
-        <a href="{{ route('deals.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded">New Deal</a>
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-800">
+                Список сделок
+            </h2>
+            <a href="{{ route('deals.create') }}"
+                class="inline-flex items-center px-4 py-2 bg-indigo-600 text-gray text-sm font-medium rounded-lg shadow hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                Добавить сделку
+            </a>
+        </div>
+    </x-slot>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+                <table class="min-w-full border-collapse border border-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                #</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Название</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Клиент</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Размер</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Статус</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Дата закрытия</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Ответственный</th>
+                            <th
+                                class="px-6 py-4 border-r border-gray-200 text-left text-xs font-medium text-gray-500 uppercase last:border-r-0">
+                                Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($deals as $deal)
+                            <tr class="border-t border-gray-200">
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ $deal->id }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ $deal->title }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ $deal->client->last_name }}
+                                    {{ $deal->client->first_name }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ number_format($deal->amount, 2) }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ ucfirst($deal->status) }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ $deal->closed_at?->format('Y-m-d') ?? '—' }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap">
+                                    {{ $deal->assignedUser->name }}</td>
+                                <td
+                                    class="px-6 py-4 border-r border-gray-200 last:border-r-0 whitespace-nowrap space-x-2">
+                                    <a href="{{ route('deals.show', $deal) }}" class="text-blue-600">Просмотр</a>
+                                    <a href="{{ route('deals.edit', $deal) }}" class="text-green-600">Редактировать</a>
+                                    <form action="{{ route('deals.destroy', $deal) }}" method="POST" class="inline">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="text-red-600"
+                                            onclick="return confirm('Удалить эту сделку?')">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="p-4">{{ $deals->links() }}</div>
+            </div>
+        </div>
     </div>
-    <table class="min-w-full bg-white border">
-        <thead>
-            <tr>
-                <th class="px-4 py-2 border">#</th>
-                <th class="px-4 py-2 border">Title</th>
-                <th class="px-4 py-2 border">Client</th>
-                <th class="px-4 py-2 border">Amount</th>
-                <th class="px-4 py-2 border">Status</th>
-                <th class="px-4 py-2 border">Closed At</th>
-                <th class="px-4 py-2 border">Assigned To</th>
-                <th class="px-4 py-2 border">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($deals as $deal)
-            <tr>
-                <td class="px-4 py-2 border">{{ $deal->id }}</td>
-                <td class="px-4 py-2 border">{{ $deal->title }}</td>
-                <td class="px-4 py-2 border">{{ $deal->client->last_name }} {{ $deal->client->first_name }}</td>
-                <td class="px-4 py-2 border">{{ number_format($deal->amount,2) }}</td>
-                <td class="px-4 py-2 border">{{ ucfirst($deal->status) }}</td>
-                <td class="px-4 py-2 border">{{ $deal->closed_at?->format('Y-m-d') ?? '—' }}</td>
-                <td class="px-4 py-2 border">{{ $deal->assignedUser->name }}</td>
-                <td class="px-4 py-2 border space-x-2">
-                    <a href="{{ route('deals.show',$deal) }}" class="text-blue-600">View</a>
-                    <a href="{{ route('deals.edit',$deal) }}" class="text-green-600">Edit</a>
-                    <form action="{{ route('deals.destroy',$deal) }}" method="POST" class="inline">@csrf @method('DELETE')
-                        <button type="submit" class="text-red-600" onclick="return confirm('Delete this deal?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <div class="mt-4">{{ $deals->links() }}</div>
-</div>
-@endsection
+</x-app-layout>

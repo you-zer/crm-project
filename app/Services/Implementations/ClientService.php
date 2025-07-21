@@ -19,13 +19,17 @@ final class ClientService implements ClientServiceInterface
     public function create(array $data): Client
     {
         return DB::transaction(function () use ($data): Client {
+            $tags = $data['tag_ids'] ?? [];
+            unset($data['tag_ids']);
+
             $client = Client::create($data);
-            if (!empty($data['tag_ids'])) {
-                $client->tags()->sync($data['tag_ids']);
+            if (!empty($tags)) {
+                $client->tags()->sync($tags);
             }
-            return $client->refresh();
+            return $client->load(['status', 'assignedUser', 'tags']);
         });
     }
+
 
     public function find(int $id): Client|null
     {
@@ -34,11 +38,13 @@ final class ClientService implements ClientServiceInterface
 
     public function update(Client $client, array $data): Client
     {
-        return DB::transaction(function () use ($client, $data): Client {
-            $client->update($data);
-            $client->tags()->sync($data['tag_ids'] ?? []);
-            return $client->refresh();
-        });
+        $tags = $data['tag_ids'] ?? [];
+        unset($data['tag_ids']);
+
+        $client->update($data);
+        $client->tags()->sync($tags);
+
+        return $client->load(['status', 'assignedUser', 'tags']);
     }
 
     public function delete(Client $client): bool

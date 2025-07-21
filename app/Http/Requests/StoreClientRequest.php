@@ -25,6 +25,8 @@ class StoreClientRequest extends FormRequest
             'latitude'           => 'nullable|numeric|between:-90,90',
             'longitude'          => 'nullable|numeric|between:-180,180',
             'assigned_user_id'   => 'nullable|exists:users,id',
+            'tag_ids'   => ['nullable', 'array'],
+            'tag_ids.*' => ['integer', 'exists:tags,id'],
         ];
     }
 }

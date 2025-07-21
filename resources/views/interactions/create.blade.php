@@ -1,34 +1,38 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Создать взаимодействие
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">New Interaction</h1>
-    <form action="{{ route('interactions.store') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="client_id" class="block font-medium">Client</label>
-            <select id="client_id" name="client_id" class="w-full border rounded px-3 py-2">
-                @foreach($clients as $client)
-                    <option value="{{ $client->id }}" @selected(old('client_id') == $client->id)>{{ $client->last_name }} {{ $client->first_name }}</option>
-                @endforeach
-            </select>
-            @error('client_id')<p class="text-red-600">{{ $message }}</p>@enderror
+    <div class="py-6">
+        <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <div
+                class="bg-white shadow-sm rounded-lg p-6
+                        w-full sm:w-3/4 md:w-1/2 lg:w-1/2 xl:w-1/3 mx-auto">
+                <form action="{{ route('interactions.store') }}" method="POST">
+                    @csrf
+                    @include('interactions._form', [
+                        'clients' => $clients,
+                        'interaction' => null,
+                        'disableClient' => false,
+                    ])
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <a href="{{ route('interactions.index') }}"
+                            class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent
+                                  rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+                                  hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Отмена
+                        </a>
+                        <button type="submit"
+                            class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent
+                                       rounded-md font-semibold text-xs text-gray uppercase tracking-widest
+                                       hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            Создать
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-4">
-            <label for="type" class="block font-medium">Type</label>
-            <select id="type" name="type" class="w-full border rounded px-3 py-2">
-                @foreach(['call'=>'Call','email'=>'Email','meeting'=>'Meeting'] as $value=>$label)
-                    <option value="{{ $value }}" @selected(old('type')==$value)>{{ $label }}</option>
-                @endforeach
-            </select>
-            @error('type')<p class="text-red-600">{{ $message }}</p>@enderror
-        </div>
-        <div class="mb-4">
-            <label for="content" class="block font-medium">Content</label>
-            <textarea id="content" name="content" class="w-full border rounded px-3 py-2" rows="4">{{ old('content') }}</textarea>
-            @error('content')<p class="text-red-600">{{ $message }}</p>@enderror
-        </div>
-        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Save</button>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>

@@ -1,26 +1,36 @@
-@extends('layouts.app')
-@section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">New Comment</n    ></h1>
-    <form action="{{ route('comments.store') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label class="block font-medium" for="client_id">Client</label>
-            <select id="client_id" name="client_id" class="w-full border rounded px-3 py-2">
-                @foreach($clients as $c)
-                    <option value="{{ $c->id }}" @selected(old('client_id')==$c->id)>
-                        {{ $c->last_name }} {{ $c->first_name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('client_id')<p class="text-red-600">{{ $message }}</p>@enderror
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Создать комментарий
+        </h2>
+    </x-slot>
+
+    <div class="py-6">
+        <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <div
+                class="bg-white shadow-sm rounded-lg p-6
+                        w-full sm:w-3/4 md:w-1/2 lg:w-1/2 xl:w-1/3 mx-auto">
+                <form method="POST" action="{{ route('comments.store') }}">
+                    @csrf
+                    @include('comments._form', [
+                        'clients' => $clients,
+                    ])
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <a href="{{ route('comments.index') }}"
+                            class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent
+                                  rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+                                  hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Отмена
+                        </a>
+                        <button type="submit"
+                            class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent
+                                       rounded-md font-semibold text-xs text-gray uppercase tracking-widest
+                                       hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            Создать
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-4">
-            <label class="block font-medium" for="content">Content</label>
-            <textarea id="content" name="content" rows="5" class="w-full border rounded px-3 py-2">{{ old('content') }}</textarea>
-            @error('content')<p class="text-red-600">{{ $message }}</p>@enderror
-        </div>
-        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Save</button>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>

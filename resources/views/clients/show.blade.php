@@ -1,37 +1,115 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="inline-flex font-semibold text-xl text-gray-800 leading-tight">
+            Карточка клиента
+        </h2>
+        <a href="{{ route('clients.edit', $client) }}"
+            class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent
+                              rounded-md font-semibold text-xs text-gray uppercase tracking-widest
+                              hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            Редактировать
+        </a>
+        <a href="{{ route('clients.index') }}"
+            class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent
+                              rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+                              hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            Назад
+        </a>
+    </x-slot>
 
-@section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Client #{{ $client->id }}</h1>
-    <dl class="grid grid-cols-2 gap-4 bg-white border rounded p-4">
-        <dt class="font-medium">Name</dt><dd>{{ $client->last_name }} {{ $client->first_name }}</dd>
-        <dt class="font-medium">Middle Name</dt><dd>{{ $client->middle_name }}</dd>
-        <dt class="font-medium">Company</dt><dd>{{ $client->company }}</dd>
-        <dt class="font-medium">Email</dt><dd>{{ $client->email }}</dd>
-        <dt class="font-medium">Phone</dt><dd>{{ $client->phone }}</dd>
-        <dt class="font-medium">Status</dt><dd>{{ $client->status->name }}</dd>
-        <dt class="font-medium">Address</dt><dd>{{ $client->address }}</dd>
-        <dt class="font-medium">Coordinates</dt><dd>{{ $client->latitude }}, {{ $client->longitude }}</dd>
-        <dt class="font-medium">Assigned To</dt><dd>{{ $client->assignedUser?->name ?? '—' }}</dd>
-        <dt class="font-medium">Created By</dt><dd>{{ $client->creator?->name ?? '—' }}</dd>
-        <dt class="font-medium">Tags</dt>
-        <dd>
-            @foreach($client->tags as $tag)
-                <span class="inline-block px-2 py-1 bg-gray-200 text-sm rounded mr-1">
-                    {{ $tag->name }}
-                </span>
-            @endforeach
-        </dd>
-    </dl>
-
-    <div class="mt-4 space-x-2">
-        <a href="{{ route('clients.edit', $client) }}" class="px-4 py-2 bg-green-600 text-white rounded">Edit</a>
-        <form action="{{ route('clients.destroy', $client) }}" method="POST" class="inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded" onclick="return confirm('Delete this client?')">Delete</button>
-        </form>
-        <a href="{{ route('clients.index') }}" class="px-4 py-2 bg-gray-300 rounded">Back</a>
+    <div class="py-6 flex justify-center">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden inline-block">
+            <table class="min-w-full border-collapse border border-gray-200">
+                <tbody>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 !text-left text-sm font-semibold text-gray-500">
+                            ФИО</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            {{ $client->last_name }} {{ $client->first_name }} {{ $client->middle_name }}
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Компания</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            {{ $client->company }}
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Email</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            <a href="mailto:{{ $client->email }}" class="hover:underline">
+                                {{ $client->email }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Телефон</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            {{ $client->phone }}
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Статус</td>
+                        <td class="border border-gray-200 px-6 py-4">
+                            <span
+                                class="inline-block px-2 py-1 text-xs font-semibold rounded-full
+                            @if ($client->status->name === 'Active') bg-green-100 text-green-800
+                            @elseif($client->status->name === 'Pending') bg-yellow-100 text-yellow-800
+                            @else bg-gray-100 text-gray-800 @endif">
+                                {{ $client->status->name }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Ответственный</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            {{ $client->assignedUser?->name ?? '—' }}
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Широта</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            {{ $client->latitude ?? '—' }}
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Долгота</td>
+                        <td class="border border-gray-200 px-6 py-4 text-sm text-gray-900">
+                            {{ $client->longitude ?? '—' }}
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td role="rowheader"
+                            class="border border-gray-200 align-top px-6 py-4 text-left text-sm font-semibold text-gray-500">
+                            Теги</td>
+                        <td class="border border-gray-200 px-6 py-4">
+                            @forelse($client->tags as $tag)
+                                <span
+                                    class="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-800 text-sm font-medium rounded-full mr-2 mb-2">
+                                    {{ $tag->name }}
+                                </span>
+                            @empty
+                                <span class="text-gray-400 text-sm">нет тегов</span>
+                            @endforelse
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-@endsection
+</x-app-layout>
